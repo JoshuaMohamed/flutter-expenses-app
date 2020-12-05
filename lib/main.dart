@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 // should have a block of imports that points to packages
 //and a separate block that points to own files
-import './question.dart';
-import './answer.dart';
+import './quiz.dart';
+import './result.dart';
 
 // main function always executed when app launches
 void main() => runApp(MyApp());
@@ -23,31 +23,49 @@ class MyApp extends StatefulWidget {
 //of name makes class/property private
 class _MyAppState extends State<MyApp> {
   // lists can group relate data together
-  final questions = const [
+  final _questions = const [
     // map (a dictionary in Python) of key value pairs
     {
       'questionText': 'What\'s your favourite colour?',
-      'answers': ['Black', 'Red', 'Blue', 'White'],
+      'answers': [
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Blue', 'score': 3},
+        {'text': 'White', 'score': 1},
+      ],
     },
     {
       'questionText': 'What\'s your favourite animal?',
-      'answers': ['Rabbit', 'Snake', 'Elephant', 'Lion'],
+      'answers': [
+        {'text': 'Rabbit', 'score': 3},
+        {'text': 'Snake', 'score': 10},
+        {'text': 'Elephant', 'score': 5},
+        {'text': 'Lion', 'score': 8},
+      ],
     },
     {
       'questionText': 'Who\'s your favourite instructor?',
-      'answers': ['Max', 'Max', 'Max', 'Max'],
+      'answers': [
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+      ],
     },
   ];
 
   var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void _answerQuestion() {
+  void _answerQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
       _questionIndex = _questionIndex + 1;
     });
 
     print(_questionIndex);
-    if (_questionIndex < questions.length) {
+    if (_questionIndex < _questions.length) {
       print('We have more questions!');
     }
   }
@@ -67,28 +85,16 @@ class _MyAppState extends State<MyApp> {
         // adding a comma after parenthesis allows to to autoformat it
         // body only takes one widget
         // ternary expression (condition)
-        body: _questionIndex < questions.length
+        body: _questionIndex < _questions.length
             // question mark marks start of code to run if condition met
             // only 1 expression can follow (Column in this case)
-            ? Column(
-                children: [
-                  Question(
-                    questions[_questionIndex]['questionText'],
-                  ),
-                  // spread operators pull all values in list out and add them to
-                  //surrounding list as individual values, to prevent nested list
-                  ...(questions[_questionIndex]['answers'] as List<String>)
-                      .map((answer) {
-                    // pointer to _answerQuestion function is passed as a callback
-                    // (receiving widget calls it in the future)
-                    return Answer(_answerQuestion, answer);
-                  }).toList(), // map() gives an iterable, which we specify is a list
-                ],
+            ? Quiz(
+                answerQuestion: _answerQuestion,
+                questionIndex: _questionIndex,
+                questions: _questions,
               )
             // colon marks start of else block
-            : Center(
-                child: Text('You did it!'),
-              ),
+            : Result(),
       ),
     );
   }
