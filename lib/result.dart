@@ -12,13 +12,13 @@ class Result extends StatelessWidget {
   String get resultPhrase {
     String resultText;
     if (resultScore <= 8) {
-      resultText = 'You are awesome and innocent!';
+      resultText = 'DoubleMegaPog!';
     } else if (resultScore <= 12) {
-      resultText = 'Pretty likeable!';
+      resultText = 'Pog!';
     } else if (resultScore <= 16) {
-      resultText = 'You are... strange?!';
+      resultText = 'Not Pog?';
     } else {
-      resultText = 'You are so bad!';
+      resultText = 'tH!S Is nOt POGGGG!';
     }
     return resultText;
   }
