@@ -58,6 +58,9 @@ class MyHomePage extends StatelessWidget {
               return Card(
                 child: Row(
                   children: [
+                    // only takes one child
+                    // styling options as well as alignment
+                    // flexible width
                     Container(
                       margin: EdgeInsets.symmetric(
                         vertical: 10,
@@ -65,19 +68,42 @@ class MyHomePage extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black,
+                          color: Colors.purple,
                           width: 2,
                         ),
                       ),
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        tx.amount.toString(),
+                        // $ is a reserved character for inserting a variable
+                        //or expression (put into {}) into a string
+                        // escape character \ can be used for $ as text
+                        '\$${tx.amount}',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          color: Colors.purple,
+                        ),
                       ),
                     ),
+                    // takes unlimited children
+                    // no styling options
+                    // always takes full available height/width
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(tx.title),
-                        Text(tx.date.toString()),
+                        Text(
+                          tx.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                        Text(
+                          tx.date.toString(),
+                          style: TextStyle(
+                            color: Colors.grey,
+                          ),
+                        ),
                       ],
                     )
                   ],
