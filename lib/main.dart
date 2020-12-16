@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -39,7 +40,6 @@ class MyHomePage extends StatelessWidget {
         title: Text('Flutter App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // container with built-in styling
@@ -51,6 +51,14 @@ class MyHomePage extends StatelessWidget {
               color: Colors.blue,
               child: Text('Chart'),
               elevation: 5,
+            ),
+          ),
+          Card(
+            child: Column(
+              children: [
+                TextField(),
+                TextField(),
+              ],
             ),
           ),
           Column(
@@ -76,6 +84,7 @@ class MyHomePage extends StatelessWidget {
                       child: Text(
                         // $ is a reserved character for inserting a variable
                         //or expression (put into {}) into a string
+                        //(string interpolation)
                         // escape character \ can be used for $ as text
                         '\$${tx.amount}',
                         style: TextStyle(
@@ -99,7 +108,7 @@ class MyHomePage extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          tx.date.toString(),
+                          DateFormat.yMMMd().add_Hm().format(tx.date),
                           style: TextStyle(
                             color: Colors.grey,
                           ),
