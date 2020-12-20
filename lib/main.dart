@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-import './transaction.dart';
+import './widgets/transaction_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -16,22 +15,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  // uses Transaction class, created in other file, as type for list
-  // a list of Transaction[s], if you will
-  final List<Transaction> transactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ),
-  ];
+  // inputs are always strings, but can be cast
+  // String titleInput;
+  // String amountInput;
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,78 +50,28 @@ class MyHomePage extends StatelessWidget {
                 children: [
                   TextField(
                     decoration: InputDecoration(labelText: 'Title'),
+                    // controller listens to and saves user input in text field
+                    controller: titleController,
+                    // fires with every keystroke
+                    // onChanged: (val) => titleInput = val,
                   ),
                   TextField(
                     decoration: InputDecoration(labelText: 'Amount'),
+                    controller: amountController,
+                    // onChanged: (val) => amountInput = val,
                   ),
                   FlatButton(
                     child: Text('Add Transaction'),
                     textColor: Colors.purple,
-                    onPressed: () {},
+                    onPressed: () {
+                      print(titleController.text);
+                    },
                   )
                 ],
               ),
             ),
           ),
-          Column(
-            children: transactions.map((tx) {
-              return Card(
-                child: Row(
-                  children: [
-                    // only takes one child
-                    // styling options as well as alignment
-                    // flexible width
-                    Container(
-                      margin: EdgeInsets.symmetric(
-                        vertical: 10,
-                        horizontal: 15,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.purple,
-                          width: 2,
-                        ),
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        // $ is a reserved character for inserting a variable
-                        //or expression (put into {}) into a string
-                        //(string interpolation)
-                        // escape character \ can be used for $ as text
-                        '\$${tx.amount}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Colors.purple,
-                        ),
-                      ),
-                    ),
-                    // takes unlimited children
-                    // no styling options
-                    // always takes full available height/width
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          tx.title,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        Text(
-                          DateFormat.yMMMd().add_Hm().format(tx.date),
-                          style: TextStyle(
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              );
-            }).toList(),
-          ),
+          TransactionList()
         ],
       ),
     );
