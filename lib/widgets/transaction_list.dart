@@ -3,87 +3,81 @@ import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
-class TransactionList extends StatefulWidget {
-  @override
-  _TransactionListState createState() => _TransactionListState();
-}
+class TransactionList extends StatelessWidget {
+  final List<Transaction> transactions;
 
-class _TransactionListState extends State<TransactionList> {
-  final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ),
-  ];
+  // list is set with constructor, used for passing data from
+  //parent widget to child widget
+  TransactionList(this.transactions);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: _userTransactions.map((tx) {
-        return Card(
-          child: Row(
-            children: [
-              // only takes one child
-              // styling options as well as alignment
-              // flexible width
-              Container(
-                margin: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: 15,
-                ),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.purple,
-                    width: 2,
+    return Container(
+      // without defining a height, ListView - which has infinite height - and
+      //column - which takes maximum height - would cause an error
+      height: 300,
+      child: ListView.builder(
+        itemBuilder: (ctxt, index) {
+          return Card(
+            child: Row(
+              children: [
+                // only takes one child
+                // styling options as well as alignment
+                // flexible width
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    vertical: 10,
+                    horizontal: 15,
                   ),
-                ),
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  // $ is a reserved character for inserting a variable
-                  //or expression (put into {}) into a string
-                  //(string interpolation)
-                  // escape character \ can be used for $ as text
-                  '\$${tx.amount}',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.purple,
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.purple,
+                      width: 2,
+                    ),
                   ),
-                ),
-              ),
-              // takes unlimited children
-              // no styling options
-              // always takes full available height/width
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tx.title,
+                  padding: EdgeInsets.all(10),
+                  child: Text(
+                    // $ is a reserved character for inserting a variable
+                    //or expression (put into {}) into a string
+                    //(string interpolation)
+                    // escape character \ can be used for $ as text
+                    '\$${transactions[index].amount}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                      fontSize: 20,
+                      color: Colors.purple,
                     ),
                   ),
-                  Text(
-                    DateFormat.yMMMd().add_Hm().format(tx.date),
-                    style: TextStyle(
-                      color: Colors.grey,
+                ),
+                // takes unlimited children
+                // no styling options
+                // always takes full available height/width
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      transactions[index].title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        );
-      }).toList(),
+                    Text(
+                      DateFormat.yMMMd()
+                          .add_Hm()
+                          .format(transactions[index].date),
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          );
+        },
+        itemCount: transactions.length,
+      ),
     );
   }
 }
