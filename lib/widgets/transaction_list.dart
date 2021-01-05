@@ -41,7 +41,8 @@ class TransactionList extends StatelessWidget {
                     //or expression (put into {}) into a string
                     //(string interpolation)
                     // escape character \ can be used for $ as text
-                    '\$${transactions[index].amount}',
+                    // toStringAsFixed limits to 2 d.p.
+                    '\$${transactions[index].amount.toStringAsFixed(2)}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
