@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
-class NewTransaction extends StatelessWidget {
+// making this stateful means it will be maintains internally by Flutter
+//more easily, so text fields won't be cleared while inputting
+class NewTransaction extends StatefulWidget {
   final Function addTx;
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
 
   NewTransaction(this.addTx);
+
+  @override
+  _NewTransactionState createState() => _NewTransactionState();
+}
+
+class _NewTransactionState extends State<NewTransaction> {
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
 
   void submitData() {
     final enteredTitle = titleController.text;
@@ -17,10 +25,15 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addTx(
+    // widget. allows access to widget properties/methods in state class
+    widget.addTx(
       enteredTitle,
       enteredAmount,
     );
+
+    // closes topmost screen displayed
+    // 'context' is a property available classwide in state class
+    Navigator.of(context).pop();
   }
 
   @override
