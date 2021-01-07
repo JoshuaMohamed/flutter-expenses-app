@@ -1,3 +1,6 @@
+// flutter run -d web-server --web-port=8080 --web-hostname=0.0.0.0
+// kill -9 $(lsof -t -i:8080)
+
 import 'package:flutter/material.dart';
 import 'package:gitpodflutter/widgets/new_transaction.dart';
 
@@ -52,18 +55,18 @@ class MyHomePage extends StatefulWidget {
 // state classes, which are private, should have private methods
 class _MyHomePageState extends State<MyHomePage> {
   final List<Transaction> _userTransactions = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      amount: 69.99,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'Weekly Groceries',
-      amount: 16.53,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New Shoes',
+    //   amount: 69.99,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'Weekly Groceries',
+    //   amount: 16.53,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _addNewTransaction(String txTitle, double txAmount) {
