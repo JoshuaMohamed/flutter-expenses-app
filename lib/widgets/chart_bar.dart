@@ -13,13 +13,14 @@ class ChartBar extends StatelessWidget {
     return Column(
       children: [
         // toStringAsFixed sets number of d.p.
-        Text('£{spendingAmount.toStringAsFixed(0)}'),
+        // FittedBox forces text into set size, preventing line wrap
+        FittedBox(child: Text('£${spendingAmount.toStringAsFixed(0)}')),
         SizedBox(
           height: 4,
         ),
         Container(
           height: 60,
-          width: 10,
+          width: 30,
           // stack allows elements to overlap
           child: Stack(
             children: [

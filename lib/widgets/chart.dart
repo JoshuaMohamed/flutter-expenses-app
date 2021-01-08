@@ -34,8 +34,8 @@ class Chart extends StatelessWidget {
       // internal variable with initial value; exit condition; increment variable
       // for (var i = 0; i < recentTransactions.length; i++) {}
 
-      print(DateFormat.E().format(weekDay).substring(0, 1));
-      print(totalSum);
+      //print(DateFormat.E().format(weekDay).substring(0, 1));
+      //print(totalSum);
 
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
@@ -53,22 +53,30 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
+    //print(groupedTransactionValues);
     return Card(
       elevation: 6,
       margin: EdgeInsets.all(20),
-      child: Row(
-        children: groupedTransactionValues.map((data) {
-          // uses $ for string interpolation,
-          //so dart just sees one long string (no variables)
-          return ChartBar(
-            data['day'],
-            data['amount'],
-            totalSpending == 0.0
-                ? 0.0
-                : (data['amount'] as double) / totalSpending,
-          );
-        }).toList(),
+      child: Padding(
+        padding: EdgeInsets.all(10),
+        child: Row(
+          children: groupedTransactionValues.map((data) {
+            // uses $ for string interpolation,
+            //so dart just sees one long string (no variables)
+            return Flexible(
+              // with .tight, children can't grow
+              fit: FlexFit.tight,
+              child: ChartBar(
+                data['day'],
+                data['amount'],
+                totalSpending == 0.0
+                    // if there are no transactions, totalSpending is 0.0
+                    ? 0.0
+                    : (data['amount'] as double) / totalSpending,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
