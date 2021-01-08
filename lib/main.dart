@@ -6,6 +6,7 @@ import 'package:gitpodflutter/widgets/new_transaction.dart';
 
 import './widgets/transaction_list.dart';
 import './widgets/new_transaction.dart';
+import './widgets/chart.dart';
 import './models/transaction.dart';
 
 void main() => runApp(MyApp());
@@ -69,6 +70,19 @@ class _MyHomePageState extends State<MyHomePage> {
     // ),
   ];
 
+  List<Transaction> get _recentTransactions {
+    // 'where' alternative approach to using for loop here
+    // allows function to be run on every item in list
+    // here anonymous function gets current item as arg (I named it tx)
+    return _userTransactions.where((tx) {
+      return tx.date.isAfter(
+        DateTime.now().subtract(
+          Duration(days: 7),
+        ),
+      );
+    }).toList();
+  }
+
   void _addNewTransaction(String txTitle, double txAmount) {
     // final because based on values unknown at time of writing code
     final newTx = Transaction(
@@ -121,14 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
             // container with built-in styling
             // assumes size of child by default
             // unless parent has its own clearly defined size
-            Container(
-              width: double.infinity,
-              child: Card(
-                color: Colors.blue,
-                child: Text('Chart'),
-                elevation: 5,
-              ),
-            ),
+            Chart(_recentTransactions),
             TransactionList(_userTransactions),
           ],
         ),
