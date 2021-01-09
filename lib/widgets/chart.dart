@@ -34,14 +34,12 @@ class Chart extends StatelessWidget {
       // internal variable with initial value; exit condition; increment variable
       // for (var i = 0; i < recentTransactions.length; i++) {}
 
-      //print(DateFormat.E().format(weekDay).substring(0, 1));
-      //print(totalSum);
-
       return {
         'day': DateFormat.E().format(weekDay).substring(0, 1),
         'amount': totalSum,
       };
-    });
+      // reversed gives an iterable
+    }).reversed.toList();
   }
 
   double get totalSpending {
