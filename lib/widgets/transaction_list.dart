@@ -5,17 +5,18 @@ import '../models/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   final List<Transaction> transactions;
+  final Function deleteTx;
 
   // list is set with constructor, used for passing data from
   //parent widget to child widget
-  TransactionList(this.transactions);
+  TransactionList(this.transactions, this.deleteTx);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       // without defining a height, ListView - which has infinite height - and
       //column - which takes maximum height - would cause an error
-      height: 300,
+      height: 500,
       child: transactions.isEmpty
           ? Column(
               children: [
@@ -59,6 +60,11 @@ class TransactionList extends StatelessWidget {
                     ),
                     subtitle: Text(
                       DateFormat.yMMMd().format(transactions[index].date),
+                    ),
+                    trailing: IconButton(
+                      icon: Icon(Icons.remove_circle),
+                      color: Theme.of(context).errorColor,
+                      onPressed: () => deleteTx(transactions[index].id),
                     ),
                   ),
                 );
