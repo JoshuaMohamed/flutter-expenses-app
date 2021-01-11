@@ -27,7 +27,7 @@ class ChartBar extends StatelessWidget {
             ),
             Container(
               height: constraints.maxHeight * 0.6,
-              width: 10,
+              width: 30,
               // stack allows elements to overlap
               child: Stack(
                 children: [
