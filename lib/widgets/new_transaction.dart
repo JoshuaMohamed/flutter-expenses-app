@@ -2,7 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gitpodflutter/widgets/adaptive_text_button.dart';
 import 'package:intl/intl.dart';
+
+import './adaptive_text_button.dart';
 
 // making this stateful means it will be maintains internally by Flutter
 //more easily, so text fields won't be cleared while inputting
@@ -108,25 +111,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             : 'Picked Date: ${DateFormat.yMd().format(_selectedDate)}',
                       ),
                     ),
-                    Platform.isAndroid
-                        ? CupertinoButton(
-                            child: Text(
-                              'Choose Date',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            onPressed: _presentDatePicker,
-                          )
-                        : TextButton(
-                            child: Text(
-                              'Choose Date',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            onPressed: _presentDatePicker,
-                          ),
+                    AdaptiveTextButton('Choose Date', _presentDatePicker),
                   ],
                 ),
               ),
