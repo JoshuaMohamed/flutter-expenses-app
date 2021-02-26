@@ -6,7 +6,8 @@ class ChartBar extends StatelessWidget {
   // what percentage of bar to colour
   final double spendingPctOfTotal;
 
-  ChartBar(this.label, this.spendingAmount, this.spendingPctOfTotal);
+  // can be made constant constructor, because all bound properties are final
+  const ChartBar(this.label, this.spendingAmount, this.spendingPctOfTotal);
 
   @override
   Widget build(BuildContext context) {
