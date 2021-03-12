@@ -58,7 +58,10 @@ class MyHomePage extends StatefulWidget {
 }
 
 // state classes, which are private, should have private methods
-class _MyHomePageState extends State<MyHomePage> {
+// 'mix in' adds certain features to class from another specified class, 
+//without fully inheriting other class
+//can also 'mix in' multiple classes, whereas can only inhert from one class
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
   final List<Transaction> _userTransactions = [
     // Transaction(
     //   id: 't1',
@@ -75,6 +78,29 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
   bool _showChart = false;
+
+  // setup listener, which tells flutter to go to observer and call 
+  //didChnageAppLifecycleState method when lifecycle state changes
+  @override
+  void initState() {
+    // observer is 'this' class, so it needs a didChangeAppLifecycleState (below)
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  // method from mixed in class, called whenever app lifecycle state changes
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+  }
+
+  @override
+  dispose() {
+    // clears listener/observer to lifecycle changes 
+    //to avoid memory leaks, when state should be removed
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   List<Transaction> get _recentTransactions {
     // 'where' alternative approach to using for loop here
