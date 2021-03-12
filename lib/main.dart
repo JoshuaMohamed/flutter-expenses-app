@@ -16,6 +16,8 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
+  // every widget has its own context, giving meta information on the widget
+  //and its location in the widget tree
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Personal Expenses',
