@@ -39,7 +39,11 @@ class TransactionList extends StatelessWidget {
         : ListView.builder(
             itemBuilder: (ctxt, index) {
               return TransactionItem(
-                  transaction: transactions[index], deleteTx: deleteTx);
+                // set key on transaction item on direct child of listview
+                // gives every new transaction list item a custom identifier
+                key: ValueKey(transactions[index].id),
+                transaction: transactions[index], deleteTx: deleteTx,
+              );
             },
             itemCount: transactions.length,
           );
